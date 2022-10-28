@@ -35,14 +35,26 @@ public class OrderDAO {
 	Order result = query.getSingleResult();
 	
 	t.commit();
-	System.out.println("Successfully started hibernate demo project.");
 	factory.close();
 	session.close();
 	
 	return result;
     }
     
-    public void save(Order order) {
+    public void insert(Order order) {
+	factory = new Configuration().configure().buildSessionFactory();
+	session = factory.openSession();
+	t = session.beginTransaction();
+	
+	session.save(order);
+	
+	t.commit();
+	System.out.println("Successfully saved order.");
+	factory.close();
+	session.close();
+    }
+    
+    public void update(Order order) {
 	factory = new Configuration().configure().buildSessionFactory();
 	session = factory.openSession();
 	t = session.beginTransaction();
